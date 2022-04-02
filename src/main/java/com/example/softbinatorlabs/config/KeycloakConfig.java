@@ -45,7 +45,9 @@ class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
                 // Partea efectiva in care autorizam request-urile
                 .authorizeRequests()
                 // Endpoint-urile de mai jos nu necesita vreo autoritate
-                //.antMatchers("/user/register-user", "/login", "/refresh").permitAll()
+                .antMatchers("/users/register-user", "/login", "/refresh").permitAll()
+                .antMatchers("/users/register-admin").hasRole("ADMIN")
+                .antMatchers("/users/delete/**").hasRole("ADMIN")
                 // Orice alt request necesita autentificare
                 .anyRequest().permitAll();
     }

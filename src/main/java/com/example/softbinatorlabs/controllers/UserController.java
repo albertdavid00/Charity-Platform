@@ -5,6 +5,7 @@ import com.example.softbinatorlabs.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
 
@@ -30,12 +31,18 @@ public class UserController {
 
     @PostMapping("/register-user")
     public ResponseEntity<?> registerUser(@RequestBody RegisterUserDto registerUserDto) {
-        return new ResponseEntity<>(userService.registerUser(registerUserDto), HttpStatus.OK);
+        return new ResponseEntity<>(userService.registerUser(registerUserDto, "ROLE_USER"), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteUser(@PathVariable Long id, Authentication authentication){
-        //TODO
+        userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/register-admin")
+    public ResponseEntity<?> registerAdmin(@RequestBody RegisterUserDto registerUserDto) {
+        return new ResponseEntity<>(userService.registerUser(registerUserDto, "ROLE_ADMIN"), HttpStatus.OK);
     }
 }

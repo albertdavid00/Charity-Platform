@@ -53,7 +53,7 @@ public class KeycloakAdminService {
         this.realm = this.keycloak.realm(keycloakRealm);
     }
 
-    public TokenDto addUserToKeycloak(Long userId, String password) {
+    public TokenDto addUserToKeycloak(Long userId, String password, String role) {
 
         // Aceste obiecte Representation vin din biblioteca Keycloak
 
@@ -76,9 +76,9 @@ public class KeycloakAdminService {
         String keycloakUserId = getCreatedId(response);
         System.out.println("User has been saved with an id: " + keycloakUserId);
 
-        // Cautam user-ul creat si ii adaugam rolul de user
+        // Cautam user-ul creat si ii adaugam rolul
         UserResource userResource = realm.users().get(keycloakUserId);
-        RoleRepresentation roleRepresentation = realm.roles().get("ROLE_USER").toRepresentation();
+        RoleRepresentation roleRepresentation = realm.roles().get(role).toRepresentation();
         userResource.roles().realmLevel().add(Collections.singletonList(roleRepresentation));
 
         // Facem un request de login pentru a intoarce si un token odata ce s-a inregistrat utilizatorul in app

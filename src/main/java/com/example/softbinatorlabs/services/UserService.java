@@ -49,7 +49,7 @@ public class UserService {
     }
 
     @SneakyThrows
-    public TokenDto registerUser(RegisterUserDto registerUserDto) {
+    public TokenDto registerUser(RegisterUserDto registerUserDto, String role) {
 
         if (userRepository.existsByEmail(registerUserDto.getEmail())) {
             throw new BadRequestException("User with email " + registerUserDto.getEmail() + " already exists!");
@@ -60,12 +60,18 @@ public class UserService {
                 .email(registerUserDto.getEmail())
                 .build();
         Long userId = userRepository.save(newUser).getId();
-        TokenDto token = keycloakAdminService.addUserToKeycloak(userId, registerUserDto.getPassword());
+        TokenDto token = keycloakAdminService.addUserToKeycloak(userId, registerUserDto.getPassword(), role);
 
         return token;
     }
 
     public void deleteUser(Long id) {
-        //TODO
+        if (userRepository.existsById(id)) {
+            keycloakAdminService.deleteUser(id);
+            userRepository.deleteById(id);
+        }
+        else {
+            throw new BadRequestException("User with id " + id + " doesn't exist!");
+        }
     }
 }
