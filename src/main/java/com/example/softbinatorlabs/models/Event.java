@@ -35,4 +35,9 @@ public class Event {
     @JoinColumn(name="category_id", nullable=false)
     @JsonIgnoreProperties(value = {"events", "user"})
     private Category category;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
+    @JsonIgnoreProperties(value = {"event", "user"})
+    private List<Comment> comments;
+
 }

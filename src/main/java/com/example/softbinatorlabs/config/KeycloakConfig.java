@@ -49,6 +49,7 @@ class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .antMatchers("/users").authenticated()
                 .antMatchers("/categories/add", "/categories/update/**", "/categories/delete/**").hasRole("ADMIN")
                 .antMatchers("/events/add/**", "/events/delete/**").authenticated()
+                .antMatchers("/comments/add/**", "/comments/delete/**", "/comments/update/**").authenticated()
                 .anyRequest().permitAll();
     }
 }
