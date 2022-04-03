@@ -1,5 +1,6 @@
 package com.example.softbinatorlabs.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 import lombok.*;
 import javax.persistence.*;
@@ -27,9 +28,11 @@ public class Event {
 
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
+    @JsonIgnoreProperties(value = {"categories", "events"})
     private User user;
 
     @ManyToOne
     @JoinColumn(name="category_id", nullable=false)
+    @JsonIgnoreProperties(value = {"events", "user"})
     private Category category;
 }

@@ -1,6 +1,8 @@
 package com.example.softbinatorlabs.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -23,6 +25,7 @@ public class Category {
 
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
+    @JsonIgnoreProperties(value = {"categories", "events"})
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")

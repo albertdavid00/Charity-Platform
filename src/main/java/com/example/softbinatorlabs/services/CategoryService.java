@@ -29,7 +29,7 @@ public class CategoryService {
     }
 
 
-    public void addCategory(CategoryDto categoryDto, long userId) {
+    public void addCategory(CategoryDto categoryDto, Long userId) {
         User user = userRepository.findById(userId).get();
 
         Category category = Category.builder()
