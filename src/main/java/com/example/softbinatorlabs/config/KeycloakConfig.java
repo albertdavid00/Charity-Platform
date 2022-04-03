@@ -42,14 +42,11 @@ class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
         http
                 // CORS si CSRF ne precizeaza de unde pot veni request-urile, dam disable la csrf
                 .cors().and().csrf().disable()
-                // Partea efectiva in care autorizam request-urile
                 .authorizeRequests()
-                // Endpoint-urile de mai jos nu necesita vreo autoritate
                 .antMatchers("/users/register-user", "/login", "/refresh").permitAll()
                 .antMatchers("/users/register-admin").hasRole("ADMIN")
                 .antMatchers("/users/delete/**").hasRole("ADMIN")
-                // Orice alt request necesita autentificare
+                .antMatchers("/categories/add", "/categories/update/**", "/categories/delete/**").hasRole("ADMIN")
                 .anyRequest().permitAll();
     }
-
 }

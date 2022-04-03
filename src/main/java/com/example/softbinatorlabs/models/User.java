@@ -2,6 +2,7 @@ package com.example.softbinatorlabs.models;
 
 import lombok.*;
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -18,6 +19,13 @@ public class User {
     private String username;
 
     private String email;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Category> categories;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Event> events;
+
 
 //    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 //    @JoinColumn(name = "passport_id")
