@@ -1,5 +1,6 @@
 package com.example.softbinatorlabs.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import javax.persistence.*;
 import java.util.List;
@@ -27,8 +28,8 @@ public class User {
     private List<Event> events;
 
 
-//    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "passport_id")
-//    private Passport passport;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonIgnoreProperties(value = {"event", "user"})
+    private List<Comment> comments;
 
 }

@@ -29,5 +29,6 @@ public class Category {
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    @JsonIgnoreProperties(value = {"category", "user", "comment"})
     private List<Event> events;
 }
