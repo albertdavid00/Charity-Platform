@@ -25,7 +25,7 @@ public class Category {
 
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
-    @JsonIgnoreProperties(value = {"categories", "events"})
+    @JsonIgnoreProperties(value = {"categories", "events", "wallet"})
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")

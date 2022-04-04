@@ -4,7 +4,9 @@ import com.example.softbinatorlabs.dtos.RegisterUserDto;
 import com.example.softbinatorlabs.dtos.TokenDto;
 import com.example.softbinatorlabs.dtos.UserInfoDto;
 import com.example.softbinatorlabs.models.User;
+import com.example.softbinatorlabs.models.Wallet;
 import com.example.softbinatorlabs.repositories.UserRepository;
+import com.example.softbinatorlabs.repositories.WalletRepository;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,12 +22,15 @@ import java.util.List;
 public class UserService {
     private final UserRepository userRepository;
     private final KeycloakAdminService keycloakAdminService;
-
+    private final WalletService walletService;
+    private final WalletRepository walletRepository;
     // Injectam repository-ul de user pentru a lucra cu modelul de User din DB
     @Autowired
-    public UserService(UserRepository userRepository, KeycloakAdminService keycloakAdminService) {
+    public UserService(UserRepository userRepository, KeycloakAdminService keycloakAdminService, WalletService walletService, WalletRepository walletRepository) {
         this.userRepository = userRepository;
         this.keycloakAdminService = keycloakAdminService;
+        this.walletService = walletService;
+        this.walletRepository = walletRepository;
     }
 
     public UserInfoDto getUser(Long userId) {
@@ -59,6 +64,9 @@ public class UserService {
                 .username(registerUserDto.getUsername())
                 .email(registerUserDto.getEmail())
                 .build();
+
+        Wallet wallet = walletService.createWallet(newUser);
+        newUser.setWallet(wallet);
         Long userId = userRepository.save(newUser).getId();
         TokenDto token = keycloakAdminService.addUserToKeycloak(userId, registerUserDto.getPassword(), role);
 
