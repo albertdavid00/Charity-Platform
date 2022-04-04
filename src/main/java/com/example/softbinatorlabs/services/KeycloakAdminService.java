@@ -94,43 +94,14 @@ public class KeycloakAdminService {
 
     }
 
-    /**
-     TODO: Endpoint for deleting users
-     Instructions: write registerAdmin method (basically the same as registerUser),
-     delete-user should be an ADMIN-only endpoint, userId sent as a PathVariable,
-     also delete method in userService to delete the user from the database
-     */
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User does not exist"));
 
-        // Folsind realm-ul,pe care l-am initializat cu permisiuni de admin cautam user-ul dupa id
-        // care reprezinta username-ul din keycloak
 
         UserRepresentation userRepresentation = realm.users().search(id.toString()).get(0);
 
         realm.users().delete(userRepresentation.getId());
     }
-
-    /**
-     TODO: endpoint for password changing in UserController
-     You just receive an email and the new password, no extra verification needed (for now)
-     */
-//    public void changePassword(ChangePasswordDto changePasswordDto) {
-//
-//        User user = userRepository.findByEmail(changePasswordDto.getEmail())
-//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User does not exist"));
-//
-//
-//        UserRepresentation userRepresentation = realm.users().search(user.getId().toString()).get(0);
-//
-//        CredentialRepresentation newCredential = new CredentialRepresentation();
-//        newCredential.setType(CredentialRepresentation.PASSWORD);
-//        newCredential.setValue(changePasswordDto.getNewPassword());
-//        newCredential.setTemporary(false);
-//        userRepresentation.setCredentials(Collections.singletonList(newCredential));
-//
-//        realm.users().get(userRepresentation.getId()).update(userRepresentation);
-//    }
 
 }

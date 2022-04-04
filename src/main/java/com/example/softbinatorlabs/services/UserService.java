@@ -45,6 +45,8 @@ public class UserService {
                 .id(user.getId())
                 .username(user.getUsername())
                 .email(user.getEmail())
+                .wallet(user.getWallet())
+                .donations(user.getDonations())
                 .build();
     }
 

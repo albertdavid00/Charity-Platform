@@ -15,13 +15,16 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "comments")
-public class Comment {
+@Table(name = "donations")
+public class Donation {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NotNull
     private String message;
+    @NotNull
+    private Double amount;
 
     private LocalDateTime dateTime;
 

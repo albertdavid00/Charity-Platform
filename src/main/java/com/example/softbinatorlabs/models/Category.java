@@ -25,10 +25,10 @@ public class Category {
 
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
-    @JsonIgnoreProperties(value = {"categories", "events", "wallet"})
+    @JsonIgnoreProperties(value = {"categories", "events", "wallet", "comments", "donations"})
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
-    @JsonIgnoreProperties(value = {"category", "user", "comment"})
+    @JsonIgnoreProperties(value = {"category", "user", "comments", "donations"})
     private List<Event> events;
 }

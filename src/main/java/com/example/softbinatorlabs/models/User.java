@@ -34,6 +34,10 @@ public class User {
     @JsonIgnoreProperties(value = {"event", "user"})
     private List<Comment> comments;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonIgnoreProperties(value = {"event", "user"})
+    private List<Donation> donations;
+
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "wallet_id")
     @JsonIgnoreProperties(value = {"user"})

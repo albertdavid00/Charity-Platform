@@ -1,6 +1,7 @@
 package com.example.softbinatorlabs.controllers;
 
 
+import com.example.softbinatorlabs.dtos.EditEventDto;
 import com.example.softbinatorlabs.dtos.EventDto;
 import com.example.softbinatorlabs.services.EventService;
 import com.example.softbinatorlabs.utility.KeycloakHelper;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -43,4 +45,11 @@ public class EventController {
         return new ResponseEntity<>(eventService.getEvent(id), HttpStatus.OK);
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateEvent(@PathVariable Long id, @RequestBody EditEventDto editEventDto, Authentication authentication){
+        eventService.updateEvent(id, editEventDto,
+                Long.parseLong(KeycloakHelper.getUser(authentication)),
+                KeycloakHelper.userIsAdmin(authentication));
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

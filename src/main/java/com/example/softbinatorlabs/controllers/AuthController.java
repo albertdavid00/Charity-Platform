@@ -19,8 +19,6 @@ public class AuthController {
         this.authService = authService;
     }
 
-    // Daca puneam @RequestBody inainte de LoginDto puteam trimite json-uri
-    // Fara el, putem trimite request-uri cu x-www-form-urlencoded din Postman/Frontend
     @PostMapping("/login")
     public ResponseEntity<?> login(LoginDto loginDto) {
         return new ResponseEntity<>(authService.login(loginDto), HttpStatus.OK);

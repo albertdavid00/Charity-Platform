@@ -22,20 +22,14 @@ public class WalletService {
         this.userRepository = userRepository;
     }
 
-    public Wallet getWallet(Long userId, Long currentUserId) {
-        if (userId.equals(currentUserId)){
-            return walletRepository.getByUserId(userId);
-        }
-        else throw new BadRequestException("You can't access the wallet of another user");
+    public Wallet getWallet(Long currentUserId) {
+            return walletRepository.getByUserId(currentUserId);
     }
 
-    public void addFunds(Long walletId, WalletDto walletDto, Long userId) {
+    public void addFunds(WalletDto walletDto, Long userId) {
         Wallet wallet = walletRepository.getByUserId(userId);
-        if (wallet.getId().equals(walletId)){
-            Double balance = walletDto.getBalance();
-            walletRepository.depositById(walletId, balance);
-        }
-        else throw new BadRequestException("You can't add funds to another wallet, but yours.");
+            Double newBalance = walletDto.getBalance() + wallet.getBalance();
+            walletRepository.depositById(wallet.getId(), newBalance);
     }
 
     public Wallet createWallet(User user) {
