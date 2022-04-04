@@ -50,7 +50,8 @@ class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .antMatchers("/categories/add", "/categories/update/**", "/categories/delete/**").hasRole("ADMIN")
                 .antMatchers("/events/add/**", "/events/delete/**").authenticated()
                 .antMatchers("/comments/add/**", "/comments/delete/**", "/comments/update/**").authenticated()
-                .antMatchers("/wallet/user/**", "wallet/add-funds/**").authenticated()
+                .antMatchers("/wallet", "/wallet/add-funds").authenticated()
+                .antMatchers("/donations/donate/**").authenticated()
                 .anyRequest().permitAll();
     }
 }

@@ -10,8 +10,7 @@ import org.springframework.cloud.openfeign.support.SpringEncoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-// Aceasta configurare o facem pentru a trimite body-ul request-urilor sub forma de
-// x-www-form-urlencoded (in Postman), spre deosebire de json-uri ca pana acum
+
 @Configuration
 public class AuthClientConfig {
     private final ObjectFactory<HttpMessageConverters> messageConverters;

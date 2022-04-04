@@ -1,5 +1,6 @@
 package com.example.softbinatorlabs.services;
 
+import com.example.softbinatorlabs.dtos.EditEventDto;
 import com.example.softbinatorlabs.dtos.EventDto;
 import com.example.softbinatorlabs.models.Category;
 import com.example.softbinatorlabs.models.Event;
@@ -63,8 +64,20 @@ public class EventService {
     }
 
     public Event getEvent(Long id) {
-        if (eventRepository.existsById(id))
-            return eventRepository.getById(id);
-        throw new BadRequestException("Event with id " + id + "doesn't exist");
+        if (eventRepository.existsById(id)) {
+            return eventRepository.findById(id).get();
+        }
+        else throw new BadRequestException("Event with id " + id + " doesn't exist");
+    }
+
+    public void updateEvent(Long eventId, EditEventDto eventDto, Long userId, Boolean userIsAdmin) {
+        Event event = eventRepository.findById(eventId).get();
+        if (userId.equals(event.getUser().getId()) || userIsAdmin){
+            event.setTitle(eventDto.getTitle());
+            event.setDescription(eventDto.getDescription());
+            event.setTargetAmount(eventDto.getTargetAmount());
+            eventRepository.save(event);
+        }
+
     }
 }

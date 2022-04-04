@@ -28,7 +28,7 @@ public class Event {
 
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
-    @JsonIgnoreProperties(value = {"categories", "events", "comments", "wallet"})
+    @JsonIgnoreProperties(value = {"categories", "events", "comments", "wallet", "donations"})
     private User user;
 
     @ManyToOne
@@ -39,5 +39,9 @@ public class Event {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
     @JsonIgnoreProperties(value = {"event", "user"})
     private List<Comment> comments;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
+    @JsonIgnoreProperties(value = {"event", "user"})
+    private List<Donation> donations;
 
 }

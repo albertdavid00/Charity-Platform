@@ -23,7 +23,7 @@ public class Wallet {
     private Double balance;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "wallet")
-    @JsonIgnoreProperties(value = {"categories", "events", "comments", "wallet"})
+    @JsonIgnoreProperties(value = {"categories", "events", "comments", "wallet", "donations"})
     private User user;
 
 

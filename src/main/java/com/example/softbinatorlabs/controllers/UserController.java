@@ -2,6 +2,7 @@ package com.example.softbinatorlabs.controllers;
 
 import com.example.softbinatorlabs.dtos.RegisterUserDto;
 import com.example.softbinatorlabs.services.UserService;
+import com.example.softbinatorlabs.utility.KeycloakHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +20,12 @@ public class UserController {
         this.userService = userService;
     }
 
-//    @GetMapping("/info")
-//    public ResponseEntity<?> getDetails(Authentication authentication) {
-//        return new ResponseEntity<>(KeycloakHelper.getUser(authentication), HttpStatus.OK);
-//    }
-//
+    @GetMapping("/info")
+    public ResponseEntity<?> getCurrentUser(Authentication authentication){
+        return new ResponseEntity<>(userService.getUser(Long.parseLong(KeycloakHelper.getUser(authentication))),
+                HttpStatus.OK);
+    }
+
     @GetMapping("")
     public ResponseEntity<?> getUsers() {
         return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
