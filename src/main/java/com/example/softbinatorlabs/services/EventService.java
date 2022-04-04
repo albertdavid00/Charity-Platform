@@ -31,7 +31,7 @@ public class EventService {
         return eventRepository.findAll();
     }
 
-    public void addEvent(EventDto eventDto, Long categoryId, Long userId) {
+    public Event addEvent(EventDto eventDto, Long categoryId, Long userId) {
         User user = userRepository.findById(userId).get();
 
         if (categoryRepository.existsById(categoryId)){
@@ -44,7 +44,7 @@ public class EventService {
                     .user(user)
                     .category(category)
                     .build();
-            eventRepository.save(event);
+            return eventRepository.save(event);
         }
         else throw new BadRequestException("Category with id " + categoryId + "doesn't exist");
 
