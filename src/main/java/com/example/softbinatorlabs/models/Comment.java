@@ -27,7 +27,7 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
-    @JsonIgnoreProperties(value = {"events", "categories", "comments"})
+    @JsonIgnoreProperties(value = {"events", "categories", "comments", "wallet"})
     private User user;
 
     @ManyToOne

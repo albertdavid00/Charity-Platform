@@ -22,8 +22,10 @@ public class User {
     private String email;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonIgnoreProperties(value = {"events", "user"})
     private List<Category> categories;
 
+    @JsonIgnoreProperties(value = {"category", "user", "comments"})
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Event> events;
 
@@ -31,5 +33,11 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     @JsonIgnoreProperties(value = {"event", "user"})
     private List<Comment> comments;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "wallet_id")
+    @JsonIgnoreProperties(value = {"user"})
+    private Wallet wallet;
+
 
 }

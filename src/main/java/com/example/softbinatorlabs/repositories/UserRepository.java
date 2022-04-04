@@ -20,10 +20,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.email = :email")
     Optional<User> findByEmailQuery(@Param("email") String email);
 
-    @Transactional
-    @Modifying
-    @Query("DELETE FROM User u where u.id = :id")
-    void deleteById(Long id);
-
     Boolean existsByEmail(String email);
 }
